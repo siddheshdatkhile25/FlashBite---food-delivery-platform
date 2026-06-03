@@ -188,6 +188,7 @@ The Java platform calls a **Python FastAPI** AI service over REST so ML stays in
 | [PRD.md](./PRD.md) | Functional requirements, APIs, events, NFRs, release plan |
 | [PROJECT_PLAN.md](./PROJECT_PLAN.md) | Tradeoffs, schema highlights, frontend structure, sprints |
 | [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Module responsibilities and event catalog summary |
+| [.cursor/skills/build-production-app/](./.cursor/skills/build-production-app/) | Agent skill: production-scale build workflow |
 
 ---
 
