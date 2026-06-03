@@ -141,7 +141,17 @@ cd backend
 mvn clean install
 ```
 
-Individual services will expose Spring Actuator health endpoints once implemented. Wire application configs to the Docker Compose hosts above.
+**Run user-service** (first runnable module):
+
+```bash
+cd backend/user-service
+mvn spring-boot:run
+```
+
+- Health: http://localhost:8082/api/v1/health  
+- Actuator: http://localhost:8082/actuator/health  
+
+Change `server.port` in `user-service/src/main/resources/application.yml` if the port is taken.
 
 ### 3. Frontend
 
