@@ -1,0 +1,19 @@
+{
+  "name": "flashbite-frontend",
+  "version": "0.0.1",
+  "private": true,
+  "packageManager": "pnpm@10.11.0",
+  "description": "FlashBite React SPA — customer, restaurant, driver, admin",
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=9"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext ts,tsx"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
