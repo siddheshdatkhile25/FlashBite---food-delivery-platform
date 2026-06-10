@@ -9,18 +9,14 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>payment-service</artifactId>
-    <name>FlashBite — payment-service</name>
-    <description>Payment processing and transaction management (FlashBite)</description>
+    <artifactId>service-registry</artifactId>
+    <name>FlashBite — service-registry</name>
+    <description>Service discovery registry for FlashBite microservices</description>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -35,7 +31,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.flashbite.payment.PaymentServiceApplication</mainClass>
+                    <mainClass>com.flashbite.serviceregistry.ServiceRegistryApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

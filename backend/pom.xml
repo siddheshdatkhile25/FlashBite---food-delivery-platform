@@ -13,6 +13,7 @@
 
     <modules>
         <module>common</module>
+        <module>service-registry</module>
         <module>api-gateway</module>
         <module>user-service</module>
         <module>restaurant-service</module>
@@ -44,6 +45,11 @@
                 <groupId>com.flashbite</groupId>
                 <artifactId>common</artifactId>
                 <version>${project.version}</version>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
