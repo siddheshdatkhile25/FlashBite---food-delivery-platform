@@ -7,7 +7,7 @@ Derived from [PRD.md](../PRD.md) and [PROJECT_PLAN.md](../PROJECT_PLAN.md).
 | Module | Responsibility |
 |--------|----------------|
 | `api-gateway` | Spring Cloud Gateway, rate limiting, routing |
-| `common` | Shared DTOs, Kafka events, security utilities |
+| `common` | Shared DTOs, Kafka events, security utilities (see below) |
 | `user-service` | Auth, profiles, RBAC, addresses |
 | `restaurant-service` | Restaurants, menus, hours, order intake |
 | `order-service` | Cart, checkout, order lifecycle, saga |
@@ -16,6 +16,22 @@ Derived from [PRD.md](../PRD.md) and [PROJECT_PLAN.md](../PROJECT_PLAN.md).
 | `notification-service` | Push, SMS, email (Kafka consumers) |
 | `search-service` | Elasticsearch indexing and queries |
 | `analytics-service` | Dashboards, KPI consumers |
+
+## Common module (`backend/common`)
+
+Library JAR (no Spring Boot app) consumed by all services.
+
+| Package | Contents |
+|---------|----------|
+| `api` | `ErrorResponse`, `ApiConstants` (`X-Trace-Id`, `Idempotency-Key`) |
+| `domain` | `UserRole`, `OrderStatus`, `PaymentStatus`, `DeliveryStatus` |
+| `events` | `DomainEvent<T>`, `EventTopics`, payload records |
+| `exception` | `ErrorCode`, `FlashBiteException`, `GlobalExceptionHandler` |
+| `security` | `JwtClaims`, `RoleGuard` |
+| `util` | `IdempotencyKeyValidator` |
+| `web` | `TraceIdFilter`, `MdcKeys` |
+
+Error shape: `{ code, message, traceId, timestamp?, details? }`.
 
 ## Kafka topics (event catalog)
 

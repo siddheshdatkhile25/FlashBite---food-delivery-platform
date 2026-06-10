@@ -6,7 +6,7 @@
 | **Module** | `common` |
 | **Sprint** | 1 |
 | **Priority** | P0 |
-| **Status** | Todo |
+| **Status** | Done |
 | **PRD** | §4.4 Security, §4.5 Observability |
 
 ## Summary
@@ -24,11 +24,11 @@ Implement the shared `common` Maven module with DTOs, Kafka event schemas, globa
 
 ## Acceptance Criteria
 
-- [ ] `common` module builds and is importable by all service modules
-- [ ] Error response shape documented and used in at least one service
-- [ ] Kafka event base classes match PRD §8 topic catalog
-- [ ] All enums align with PRD order lifecycle (`PLACED → CONFIRMED → PREPARING → READY → PICKED_UP → DELIVERED`)
-- [ ] No Spring Boot application in `common` (library only)
+- [x] `common` module builds and is importable by all service modules
+- [x] Error response shape documented and used in at least one service
+- [x] Kafka event base classes match PRD §8 topic catalog
+- [x] All enums align with PRD order lifecycle (`PLACED → CONFIRMED → PREPARING → READY → PICKED_UP → DELIVERED`)
+- [x] No Spring Boot application in `common` (library only)
 
 ## Technical Notes
 
@@ -42,6 +42,6 @@ Implement the shared `common` Maven module with DTOs, Kafka event schemas, globa
 
 ## Definition of Done
 
-- [ ] `mvn clean install` passes for `backend/common`
-- [ ] Unit tests for error mapping and event serialization
-- [ ] README snippet in module or ARCHITECTURE.md updated
+- [x] `mvn clean install` passes for `backend/common`
+- [x] Unit tests for error mapping and event serialization
+- [x] README snippet in module or ARCHITECTURE.md updated
