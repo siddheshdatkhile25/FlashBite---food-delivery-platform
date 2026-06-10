@@ -16,14 +16,8 @@ public record ErrorResponse(
     public static ErrorResponse of(String code, String message, String traceId) {
         return new ErrorResponse(code, message, traceId, Instant.now(), null);
     }
+
     public static ErrorResponse of(String code, String message, String traceId, Map<String, Object> details) {
         return new ErrorResponse(code, message, traceId, Instant.now(), details);
     }
 }
-
-
-   
-    
-
-    
-
