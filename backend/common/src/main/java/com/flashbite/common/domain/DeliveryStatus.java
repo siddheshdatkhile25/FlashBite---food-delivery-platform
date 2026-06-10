@@ -8,6 +8,5 @@ public enum DeliveryStatus {
     EN_ROUTE,
     ARRIVING,
     DELIVERED,
-    CANCELLED;
-
+    CANCELLED
 }

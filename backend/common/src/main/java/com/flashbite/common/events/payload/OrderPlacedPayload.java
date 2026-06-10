@@ -4,11 +4,8 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public record OrderPlacedPayload(
-    UUID orderId,
-    UUID customerId,
-    UUID restaurantId,
-    BigDecimal totalAmount
-
-) {
-
-}
+        UUID orderId,
+        UUID customerId,
+        UUID restaurantId,
+        BigDecimal amount
+) {}
