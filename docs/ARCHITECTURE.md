@@ -31,3 +31,7 @@ See PRD §8: `order.placed`, `payment.success`, `order.confirmed`, `order.ready`
 ## Build path
 
 Sprints 1–2: modular monolith + PostgreSQL + React basics → later extract services and add Kafka (see PROJECT_PLAN incremental table).
+
+## Implementation tickets
+
+Backend work is tracked in [docs/tickets/backend/](tickets/backend/README.md) (BE-001 through BE-093).
