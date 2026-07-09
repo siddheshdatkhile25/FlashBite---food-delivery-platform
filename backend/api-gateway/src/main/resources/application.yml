@@ -1,0 +1,130 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+
+      routes:
+        # ==========================
+        # User Service
+        # ==========================
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/v1/auth/**
+
+        # ==========================
+        # Restaurant Service
+        # ==========================
+        - id: restaurant-service
+          uri: lb://restaurant-service
+          predicates:
+            - Path=/api/v1/restaurants/**
+
+        # Optional: Search APIs
+        - id: search-service
+          uri: lb://search-service
+          predicates:
+            - Path=/api/v1/search/**
+
+        # ==========================
+        # Order Service
+        # ==========================
+        - id: order-service-cart
+          uri: lb://order-service
+          predicates:
+            - Path=/api/v1/cart/**
+          filters:
+            - AuthenticationFilter #TODO: Add authentication filter
+
+        - id: order-service-orders
+          uri: lb://order-service
+          predicates:
+            - Path=/api/v1/orders/**
+          filters:
+            - AuthenticationFilter
+
+        # ==========================
+        # Payment Service
+        # ==========================
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/v1/payments/**
+          filters:
+            - AuthenticationFilter
+
+        # ==========================
+        # Delivery Service
+        # ==========================
+        - id: delivery-service
+          uri: lb://delivery-service
+          predicates:
+            - Path=/api/v1/driver/**
+          filters:
+            - AuthenticationFilter
+
+
+        # ==========================
+        # Analytics Service
+        # ==========================
+        - id: analytics-service
+          uri: lb://analytics-service
+          predicates:
+            - Path=/api/v1/admin/analytics/**
+          filters:
+            - AuthenticationFilter
+
+
+        # ==========================
+        # Admin APIs handled by User Service
+        # ==========================
+        - id: admin-user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/v1/admin/users/**
+          filters:
+            - AuthenticationFilter
+
+
+      # ==========================
+      # Global CORS Configuration
+      # ==========================
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"
+              - "http://localhost:5173"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            exposedHeaders:
+              - Authorization
+            allowCredentials: true
+            maxAge: 3600
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO

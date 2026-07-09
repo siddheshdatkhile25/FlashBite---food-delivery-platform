@@ -2,6 +2,31 @@ spring:
   application:
     name: user-service
 
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: user
+
+  flyway:
+    enabled: true
+    locations: classpath:/db/migration
+    schemas: user
+    default-schema: user
+    create-schema: true
+    table: flyway_schema_history
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    clean-on-migrate: false
+
 server:
   port: 8082
 
