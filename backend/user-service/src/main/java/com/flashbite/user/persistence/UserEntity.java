@@ -2,39 +2,85 @@ package com.flashbite.user.persistence;
 
 import java.util.UUID;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.flashbite.common.domain.UserRole;
+import com.flashbite.user.domain.UserStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
+@Table(
+    name = "users",
+    indexes = {
+        @Index(name = "idx_users_email", columnList = "email"),
+        @Index(name = "idx_users_phone", columnList = "phone")
+    }
+)
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@DynamicUpdate
+
 public class UserEntity extends AuditableEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false, length = 255, unique = true)
+    @Column(nullable = false, unique = true, length = 255)
     private String email;
 
-    @Column(nullable = false, length = 32, unique = true)
+    @Column(nullable = false, unique = true, length = 20)
     private String phone;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
     private UserRole role;
 
-    @Column(nullable = false)
-    private boolean emailVerified;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 32)
+    @Builder.Default
+    private UserStatus status = UserStatus.PENDING_VERIFICATION;
+
+    @Builder.Default
+    @Column(name = "email_verified", nullable = false)
+    private boolean emailVerified = false;
+
+    @Builder.Default
+    @Column(name = "phone_verified", nullable = false)
+    private boolean phoneVerified = false;
+
+    public void verifyEmail() {
+        this.emailVerified = true;
+    }
+
+    public void verifyPhone() {
+        this.phoneVerified = true;
+    }
+
+    public void activate() {
+        this.status = UserStatus.ACTIVE;
+    }
+
+    public void block() {
+        this.status = UserStatus.BLOCKED;
+    }
 }

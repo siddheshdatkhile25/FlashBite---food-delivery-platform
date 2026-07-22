@@ -1,16 +1,35 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users
+(
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email VARCHAR(255) NOT NULL,
-    phone VARCHAR(32) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     role VARCHAR(32) NOT NULL,
+    status VARCHAR(32) NOT NULL DEFAULT 'PENDING_VERIFICATION',
     email_verified BOOLEAN NOT NULL DEFAULT FALSE,
+    phone_verified BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     CONSTRAINT uk_users_email UNIQUE (email),
-    CONSTRAINT uk_users_phone UNIQUE (phone)
+    CONSTRAINT uk_users_phone UNIQUE (phone),
+
+    CONSTRAINT chk_user_role
+        CHECK (role IN (
+            'CUSTOMER',
+            'RESTAURANT',
+            'DRIVER',
+            'ADMIN'
+        )),
+
+    CONSTRAINT chk_user_status
+        CHECK (status IN (
+            'PENDING_VERIFICATION',
+            'ACTIVE',
+            'BLOCKED',
+            'DELETED'
+        ))
 );
 
 CREATE TABLE IF NOT EXISTS addresses (
