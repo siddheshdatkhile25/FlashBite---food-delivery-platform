@@ -2,6 +2,8 @@
 
 Implementation tickets for the Java/Spring Boot backend, derived from [PRD.md](../../../PRD.md), [PROJECT_PLAN.md](../../../PROJECT_PLAN.md), and [docs/ARCHITECTURE.md](../../ARCHITECTURE.md).
 
+Current repo status tracker: [TICKET_TRACKER.md](./TICKET_TRACKER.md)
+
 ## Status legend
 
 | Status | Meaning |

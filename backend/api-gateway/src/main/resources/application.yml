@@ -7,90 +7,6 @@ spring:
 
   cloud:
     gateway:
-
-      routes:
-        # ==========================
-        # User Service
-        # ==========================
-        - id: user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/api/v1/auth/**
-
-        # ==========================
-        # Restaurant Service
-        # ==========================
-        - id: restaurant-service
-          uri: lb://restaurant-service
-          predicates:
-            - Path=/api/v1/restaurants/**
-
-        # Optional: Search APIs
-        - id: search-service
-          uri: lb://search-service
-          predicates:
-            - Path=/api/v1/search/**
-
-        # ==========================
-        # Order Service
-        # ==========================
-        - id: order-service-cart
-          uri: lb://order-service
-          predicates:
-            - Path=/api/v1/cart/**
-          filters:
-            - AuthenticationFilter #TODO: Add authentication filter
-
-        - id: order-service-orders
-          uri: lb://order-service
-          predicates:
-            - Path=/api/v1/orders/**
-          filters:
-            - AuthenticationFilter
-
-        # ==========================
-        # Payment Service
-        # ==========================
-        - id: payment-service
-          uri: lb://payment-service
-          predicates:
-            - Path=/api/v1/payments/**
-          filters:
-            - AuthenticationFilter
-
-        # ==========================
-        # Delivery Service
-        # ==========================
-        - id: delivery-service
-          uri: lb://delivery-service
-          predicates:
-            - Path=/api/v1/driver/**
-          filters:
-            - AuthenticationFilter
-
-
-        # ==========================
-        # Analytics Service
-        # ==========================
-        - id: analytics-service
-          uri: lb://analytics-service
-          predicates:
-            - Path=/api/v1/admin/analytics/**
-          filters:
-            - AuthenticationFilter
-
-
-        # ==========================
-        # Admin APIs handled by User Service
-        # ==========================
-        - id: admin-user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/api/v1/admin/users/**
-          filters:
-            - AuthenticationFilter
-
-
       # ==========================
       # Global CORS Configuration
       # ==========================
@@ -116,15 +32,45 @@ spring:
 
 eureka:
   client:
+    enabled: ${EUREKA_ENABLED:false}
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_DEFAULT_ZONE:http://localhost:8761/eureka/}
 
 management:
   endpoints:
     web:
       exposure:
         include: health,info,gateway
+  endpoint:
+    health:
+      probes:
+        enabled: true
 
 logging:
   level:
     org.springframework.cloud.gateway: INFO
+    com.flashbite.gateway: INFO
+
+flashbite:
+  gateway:
+    routes:
+      user-service-uri: ${USER_SERVICE_URI:http://localhost:8082}
+      restaurant-service-uri: ${RESTAURANT_SERVICE_URI:http://localhost:8083}
+      order-service-uri: ${ORDER_SERVICE_URI:http://localhost:8084}
+      payment-service-uri: ${PAYMENT_SERVICE_URI:http://localhost:8085}
+      delivery-service-uri: ${DELIVERY_SERVICE_URI:http://localhost:8086}
+      notification-service-uri: ${NOTIFICATION_SERVICE_URI:http://localhost:8087}
+      search-service-uri: ${SEARCH_SERVICE_URI:http://localhost:8088}
+      analytics-service-uri: ${ANALYTICS_SERVICE_URI:http://localhost:8089}
+    security:
+      jwt-secret: ${FLASHBITE_JWT_SECRET:flashbite-dev-jwt-secret-change-me-1234567890abcdef}
+      public-paths:
+        - /api/v1/auth/**
+        - /api/v1/health
+        - /api/v1/payments/webhook
+        - /actuator/**
+    rate-limit:
+      public-ip-requests-per-window: ${FLASHBITE_GATEWAY_PUBLIC_IP_LIMIT:60}
+      protected-ip-requests-per-window: ${FLASHBITE_GATEWAY_PROTECTED_IP_LIMIT:120}
+      protected-user-requests-per-window: ${FLASHBITE_GATEWAY_PROTECTED_USER_LIMIT:60}
+      window-seconds: ${FLASHBITE_GATEWAY_RATE_WINDOW_SECONDS:60}

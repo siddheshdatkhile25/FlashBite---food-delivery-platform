@@ -2,6 +2,31 @@
 # Services: wire Spring Boot apps after initial implementation
 
 services:
+  api-gateway:
+    image: maven:3.9.9-eclipse-temurin-17
+    profiles:
+      - gateway
+    working_dir: /workspace/backend
+    command: ["mvn", "-pl", "api-gateway", "-am", "spring-boot:run"]
+    environment:
+      EUREKA_ENABLED: "false"
+      USER_SERVICE_URI: http://host.docker.internal:8082
+      RESTAURANT_SERVICE_URI: http://host.docker.internal:8083
+      ORDER_SERVICE_URI: http://host.docker.internal:8084
+      PAYMENT_SERVICE_URI: http://host.docker.internal:8085
+      DELIVERY_SERVICE_URI: http://host.docker.internal:8086
+      NOTIFICATION_SERVICE_URI: http://host.docker.internal:8087
+      SEARCH_SERVICE_URI: http://host.docker.internal:8088
+      ANALYTICS_SERVICE_URI: http://host.docker.internal:8089
+      FLASHBITE_JWT_SECRET: flashbite-dev-jwt-secret-change-me-1234567890abcdef
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/workspace/backend
+      - maven_cache:/root/.m2
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
   postgres:
     image: postgres:16-alpine
     environment:
@@ -52,5 +77,6 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
 
 volumes:
+  maven_cache:
   postgres_data:
   mongo_data:

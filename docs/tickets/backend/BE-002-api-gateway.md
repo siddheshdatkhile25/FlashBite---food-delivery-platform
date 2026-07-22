@@ -6,7 +6,7 @@
 | **Module** | `api-gateway` |
 | **Sprint** | 11–12 |
 | **Priority** | P0 |
-| **Status** | Todo |
+| **Status** | Done |
 | **PRD** | §4.4 Security (rate limiting, RBAC at gateway) |
 
 ## Summary
@@ -24,11 +24,11 @@ Spring Cloud Gateway as the single entry point: route `/api/v1/**` to backend se
 
 ## Acceptance Criteria
 
-- [ ] All PRD §7 endpoints reachable through gateway on single port (e.g. 8080)
-- [ ] Unauthenticated requests to protected routes return 401
-- [ ] Rate limit returns 429 with `Retry-After` header
-- [ ] `traceId` forwarded to downstream services via `X-Trace-Id`
-- [ ] Gateway health check at `/actuator/health`
+- [x] All PRD §7 endpoints reachable through gateway on single port (e.g. 8080)
+- [x] Unauthenticated requests to protected routes return 401
+- [x] Rate limit returns 429 with `Retry-After` header
+- [x] `traceId` forwarded to downstream services via `X-Trace-Id`
+- [x] Gateway health check at `/actuator/health`
 
 ## API Routes (examples)
 
@@ -48,6 +48,6 @@ Spring Cloud Gateway as the single entry point: route `/api/v1/**` to backend se
 
 ## Definition of Done
 
-- [ ] Integration test: auth route public, orders route protected
-- [ ] Rate limit tested with burst traffic
-- [ ] `docker-compose.yml` exposes gateway as primary backend URL
+- [x] Integration test: auth route public, orders route protected
+- [x] Rate limit tested with burst traffic
+- [x] `docker-compose.yml` exposes gateway as primary backend URL
