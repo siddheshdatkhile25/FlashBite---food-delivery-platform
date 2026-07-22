@@ -1,9 +1,9 @@
 spring:
   application:
-    name: user-service
+    name: order-service
 
   datasource:
-    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${USER_SERVICE_DATABASE_NAME:flashbite_user}
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${ORDER_SERVICE_DATABASE_NAME:flashbite_order}
     username: ${DATABASE_USERNAME:flashbite}
     password: ${DATABASE_PASSWORD:flashbite}
     driver-class-name: org.postgresql.Driver
@@ -28,7 +28,7 @@ spring:
     clean-disabled: true
 
 server:
-  port: 8082
+  port: 8084
 
 management:
   endpoints:

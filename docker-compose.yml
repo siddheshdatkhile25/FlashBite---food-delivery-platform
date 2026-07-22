@@ -32,11 +32,12 @@ services:
     environment:
       POSTGRES_USER: flashbite
       POSTGRES_PASSWORD: flashbite
-      POSTGRES_DB: flashbite
+      POSTGRES_DB: postgres
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./infrastructure/postgres/init:/docker-entrypoint-initdb.d
 
   mongodb:
     image: mongo:7
