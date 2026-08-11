@@ -6,7 +6,7 @@
 | **Module** | `infrastructure` / all PostgreSQL services |
 | **Sprint** | 1 |
 | **Priority** | P0 |
-| **Status** | Todo |
+| **Status** | Done |
 | **PRD** | §6 Data Model |
 
 ## Summary
@@ -24,11 +24,11 @@ Set up Flyway migrations, PostgreSQL schemas per bounded context, and Spring Dat
 
 ## Acceptance Criteria
 
-- [ ] `docker compose up -d` Postgres connects from all services
-- [ ] Flyway migrations run on startup without manual DDL
-- [ ] `orders` table matches PROJECT_PLAN schema (UUID PK, status, JSONB address, version)
-- [ ] Migrations are versioned and idempotent on fresh DB
-- [ ] `.env.example` documents DB connection vars
+- [x] `docker compose up -d` Postgres connects from all services
+- [x] Flyway migrations run on startup without manual DDL
+- [x] `orders` table matches PROJECT_PLAN schema (UUID PK, status, JSONB address, version)
+- [x] Migrations are versioned and idempotent on fresh DB
+- [x] `.env.example` documents DB connection vars
 
 ## Data Model (initial)
 
@@ -43,5 +43,5 @@ Set up Flyway migrations, PostgreSQL schemas per bounded context, and Spring Dat
 
 ## Definition of Done
 
-- [ ] Integration test boots service with Testcontainers Postgres
-- [ ] No secrets in `application.yml` (env vars only)
+- [x] Integration test boots service with Testcontainers Postgres
+- [x] No secrets in `application.yml` (env vars only)

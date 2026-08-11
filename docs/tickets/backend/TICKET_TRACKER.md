@@ -11,8 +11,8 @@ This tracker shows which backend tickets are done and which are still pending ba
 
 | Status | Count |
 |--------|-------|
-| Done | 2 |
-| Pending | 55 |
+| Done | 3 |
+| Pending | 54 |
 
 ## Done
 
@@ -20,12 +20,12 @@ This tracker shows which backend tickets are done and which are still pending ba
 |----|-------|-------|
 | [BE-001](./BE-001-common-shared-module.md) | Common shared module (DTOs, events, errors) | Shared enums, event envelope, error handling, security helpers, trace filter, and unit tests are present in `backend/common`. |
 | [BE-002](./BE-002-api-gateway.md) | API Gateway (routing, rate limiting, JWT) | Gateway routes are configured, protected APIs enforce JWT, trace IDs are forwarded, rate limiting returns `429`, and the module now has integration coverage. |
+| [BE-003](./BE-003-database-migrations-foundation.md) | Database migrations & multi-service DB setup | Flyway schemas configured per bounded context, `docker-compose` auto-initializes DBs on Postgres mount, integration tests are backed by `Testcontainers`. |
 
 ## Pending
 
 | ID | Title | Notes |
 |----|-------|-------|
-| [BE-003](./BE-003-database-migrations-foundation.md) | Database migrations & multi-service DB setup | Pending |
 | [BE-010](./BE-010-user-registration-login.md) | User registration & email/password login | Pending |
 | [BE-011](./BE-011-jwt-refresh-tokens.md) | JWT access & refresh token management | Pending |
 | [BE-012](./BE-012-oauth2-social-login.md) | OAuth2 social login (Google, Facebook) | Pending |
