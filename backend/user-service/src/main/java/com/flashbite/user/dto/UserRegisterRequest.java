@@ -6,7 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(description = "Request object for user registration")
 public record UserRegisterRequest(
         @NotBlank(message = "Email is required")
         @Email(message = "Email must be a valid address")

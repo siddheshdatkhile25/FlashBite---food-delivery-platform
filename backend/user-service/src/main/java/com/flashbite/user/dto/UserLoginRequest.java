@@ -3,7 +3,9 @@ package com.flashbite.user.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(description = "Request object for user login")
 public record UserLoginRequest(
         @NotBlank(message = "Email or phone is required")
         @Size(max = 255, message = "Email or phone must be at most 255 characters")

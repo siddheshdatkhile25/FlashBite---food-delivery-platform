@@ -6,7 +6,7 @@
 | **Module** | `user-service` |
 | **Sprint** | 1–2 |
 | **Priority** | P0 |
-| **Status** | Todo |
+| **Status** | Done |
 | **PRD** | UM-01 |
 
 ## Summary
@@ -15,12 +15,12 @@ Email/phone + password registration and login for customers, restaurants, driver
 
 ## Acceptance Criteria
 
-- [ ] `POST /api/v1/auth/register` creates account with hashed password (BCrypt)
-- [ ] Duplicate email/phone returns 409 with stable error code
-- [ ] `POST /api/v1/auth/login` returns tokens on valid credentials
-- [ ] Invalid credentials return 401 without revealing which field failed
-- [ ] Verification email/SMS stub queued (full delivery in BE-063)
-- [ ] Server-side validation on all fields; password policy enforced
+- [x] `POST /api/v1/auth/register` creates account with hashed password (BCrypt)
+- [x] Duplicate email/phone returns 409 with stable error code
+- [x] `POST /api/v1/auth/login` returns tokens on valid credentials
+- [x] Invalid credentials return 401 without revealing which field failed
+- [x] Verification email/SMS stub queued (full delivery in BE-063)
+- [x] Server-side validation on all fields; password policy enforced
 
 ## API Endpoints
 
@@ -41,6 +41,6 @@ users (id UUID, email, phone, password_hash, role, email_verified, created_at)
 
 ## Definition of Done
 
-- [ ] Unit tests for password hashing and validation
-- [ ] Integration test: register → login happy path
-- [ ] OpenAPI or DTO docs updated
+- [x] Unit tests for password hashing and validation
+- [x] Integration test: register → login happy path
+- [x] OpenAPI or DTO docs updated
