@@ -17,6 +17,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 class PaymentServiceDatabaseIntegrationTest {
 
     @Container
+    @SuppressWarnings("resource")
     static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine")
             .withDatabaseName("flashbite_payment")
             .withUsername("flashbite")
