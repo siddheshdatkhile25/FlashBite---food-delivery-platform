@@ -162,6 +162,10 @@ public class AuthServiceImpl implements AuthService {
         refreshTokenRepository.save(refreshTokenEntity);
     }
 
+
+
+
+    // Helper methods
     private void ensureUserDoesNotExist(String email, String phone) {
         boolean emailExists = userRepository.existsByEmail(email);
         boolean phoneExists = userRepository.existsByPhone(phone);
