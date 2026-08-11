@@ -65,4 +65,64 @@ class AuthFlowIntegrationTest {
                 .andExpect(jsonPath("$.tokens.refreshToken").isNotEmpty())
                 .andExpect(jsonPath("$.user.email").value("alex@example.com"));
     }
+
+    @Test
+    void refreshTokensThenLogoutFlow() throws Exception {
+        // Register a unique user for this test
+        mockMvc.perform(post("/api/v1/auth/register")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "email": "sarah@example.com",
+                                  "phone": "+15559998888",
+                                  "password": "Str0ng!Pass",
+                                  "role": "CUSTOMER"
+                                }
+                                """))
+                .andExpect(status().isCreated());
+
+        // 1. Initial Login
+        org.springframework.test.web.servlet.MvcResult loginResult = mockMvc.perform(post("/api/v1/auth/login")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "identifier": "sarah@example.com",
+                                  "password": "Str0ng!Pass"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String originalRefreshToken = com.jayway.jsonpath.JsonPath.read(
+                loginResult.getResponse().getContentAsString(), 
+                "$.tokens.refreshToken"
+        );
+
+        // 2. Trigger a Refresh
+        org.springframework.test.web.servlet.MvcResult refreshResult = mockMvc.perform(post("/api/v1/auth/refresh")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"refreshToken\": \"" + originalRefreshToken + "\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.accessToken").isNotEmpty())
+                .andExpect(jsonPath("$.refreshToken").isNotEmpty())
+                .andExpect(jsonPath("$.refreshToken").value(org.hamcrest.Matchers.not(originalRefreshToken))) 
+                .andReturn();
+
+        String newRefreshToken = com.jayway.jsonpath.JsonPath.read(
+                refreshResult.getResponse().getContentAsString(), 
+                "$.refreshToken"
+        );
+
+        // 3. Logout using the new refresh token
+        mockMvc.perform(post("/api/v1/auth/logout")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"refreshToken\": \"" + newRefreshToken + "\"}"))
+                .andExpect(status().isNoContent()); 
+
+        // 4. Attempt to use the logged-out token (Expect 401 Unauthorized)
+        mockMvc.perform(post("/api/v1/auth/refresh")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"refreshToken\": \"" + newRefreshToken + "\"}"))
+                .andExpect(status().isUnauthorized());
+    }
 }

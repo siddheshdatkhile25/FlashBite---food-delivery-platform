@@ -4,7 +4,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HexFormat;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -18,6 +20,7 @@ import com.flashbite.common.exception.ErrorCode;
 import com.flashbite.common.exception.FlashBiteException;
 import com.flashbite.user.dto.AuthTokensResponse;
 import com.flashbite.user.dto.AuthUserResponse;
+import com.flashbite.user.dto.RefreshTokenRequest;
 import com.flashbite.user.dto.UserLoginRequest;
 import com.flashbite.user.dto.UserLoginResponse;
 import com.flashbite.user.dto.UserRegisterRequest;
@@ -62,8 +65,7 @@ public class AuthServiceImpl implements AuthService {
             verificationNotificationService.queueRegistrationVerification(savedUser);
             return new UserRegisterResponse(
                     toAuthUserResponse(savedUser),
-                    "Verification email and SMS queued"
-            );
+                    "Verification email and SMS queued");
         } catch (DataIntegrityViolationException exception) {
             throw duplicateUserException(normalizedEmail, normalizedPhone);
         }
@@ -90,10 +92,9 @@ public class AuthServiceImpl implements AuthService {
         String refreshToken = jwtService.generateRefreshToken();
 
         RefreshTokenEntity refreshTokenEntity = new RefreshTokenEntity();
-        refreshTokenEntity.setId(UUID.randomUUID());
         refreshTokenEntity.setUserId(user.getId());
         refreshTokenEntity.setTokenHash(hashToken(refreshToken));
-        refreshTokenEntity.setExpiresAt(Instant.now().plusSeconds(jwtService.refreshTokenExpiresInSeconds()));
+        refreshTokenEntity.setTimeToLiveSeconds(jwtService.refreshTokenExpiresInSeconds());
         refreshTokenRepository.save(refreshTokenEntity);
 
         return new UserLoginResponse(
@@ -103,9 +104,62 @@ public class AuthServiceImpl implements AuthService {
                         refreshToken,
                         "Bearer",
                         jwtService.accessTokenExpiresInSeconds(),
-                        jwtService.refreshTokenExpiresInSeconds()
-                )
+                        jwtService.refreshTokenExpiresInSeconds()));
+    }
+
+    
+    @Override
+    public AuthTokensResponse refreshToken(RefreshTokenRequest request) {
+        String tokenHash = hashToken(request.refreshToken());
+        
+        RefreshTokenEntity refreshTokenEntity = refreshTokenRepository.findById(tokenHash)
+                .orElseThrow(this::invalidCredentialsException);
+
+        // Note: With Redis TimeToLive handling expiration, manual expiration checking is not needed.
+        // We can instead check if the token was explicitly revoked.
+        if (refreshTokenEntity.getRevokedAt() != null) {
+            List<RefreshTokenEntity> allUserTokens = refreshTokenRepository.findByUserId(refreshTokenEntity.getUserId());
+            
+            refreshTokenRepository.deleteAll(allUserTokens);
+
+            throw new FlashBiteException(ErrorCode.UNAUTHORIZED, HttpStatus.UNAUTHORIZED, "Security Breach : All sessions revoked. Please login again.");
+        }
+        
+        UserEntity user = userRepository.findById(refreshTokenEntity.getUserId())
+                .orElseThrow(this::invalidCredentialsException);
+        
+        // Revoke the old refresh token
+        refreshTokenEntity.setRevokedAt(Instant.now());
+        refreshTokenRepository.save(refreshTokenEntity);
+
+        // Generate newly rotated tokens
+        String newAccessToken = jwtService.generateAccessToken(user);
+        String newRefreshToken = jwtService.generateRefreshToken();
+
+        RefreshTokenEntity newRefreshTokenEntity = new RefreshTokenEntity();
+        newRefreshTokenEntity.setUserId(user.getId());
+        newRefreshTokenEntity.setTokenHash(hashToken(newRefreshToken));
+        newRefreshTokenEntity.setTimeToLiveSeconds(jwtService.refreshTokenExpiresInSeconds());
+        refreshTokenRepository.save(newRefreshTokenEntity);
+
+        return new AuthTokensResponse(
+                newAccessToken,
+                newRefreshToken,
+                "Bearer",
+                jwtService.accessTokenExpiresInSeconds(),
+                jwtService.refreshTokenExpiresInSeconds()
         );
+    }
+
+    @Override
+    public void logout(RefreshTokenRequest request) {
+        String tokenHash = hashToken(request.refreshToken());
+        
+        RefreshTokenEntity refreshTokenEntity = refreshTokenRepository.findById(tokenHash)
+                .orElseThrow(this::invalidCredentialsException);
+
+        refreshTokenEntity.setRevokedAt(Instant.now());
+        refreshTokenRepository.save(refreshTokenEntity);
     }
 
     private void ensureUserDoesNotExist(String email, String phone) {
@@ -124,17 +178,14 @@ public class AuthServiceImpl implements AuthService {
                 "Email or phone already registered",
                 Map.of(
                         "email", email,
-                        "phone", phone
-                )
-        );
+                        "phone", phone));
     }
 
     private FlashBiteException invalidCredentialsException() {
         return new FlashBiteException(
                 ErrorCode.UNAUTHORIZED,
                 HttpStatus.UNAUTHORIZED,
-                "Invalid credentials"
-        );
+                "Invalid credentials");
     }
 
     private AuthUserResponse toAuthUserResponse(UserEntity user) {
@@ -145,8 +196,7 @@ public class AuthServiceImpl implements AuthService {
                 user.getRole(),
                 user.getStatus(),
                 user.isEmailVerified(),
-                user.isPhoneVerified()
-        );
+                user.isPhoneVerified());
     }
 
     private String normalizeEmail(String email) {

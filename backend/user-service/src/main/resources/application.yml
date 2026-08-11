@@ -44,3 +44,10 @@ flashbite:
     jwt-secret: ${FLASHBITE_JWT_SECRET:flashbite-dev-jwt-secret-change-me-1234567890abcdef}
     access-token-ttl-seconds: ${FLASHBITE_ACCESS_TOKEN_TTL_SECONDS:900}
     refresh-token-ttl-seconds: ${FLASHBITE_REFRESH_TOKEN_TTL_SECONDS:604800}
+
+spring:
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+

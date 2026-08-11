@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flashbite.user.dto.AuthTokensResponse;
+import com.flashbite.user.dto.RefreshTokenRequest;
 import com.flashbite.user.dto.UserLoginRequest;
 import com.flashbite.user.dto.UserLoginResponse;
 import com.flashbite.user.dto.UserRegisterRequest;
@@ -42,4 +44,18 @@ public class AuthController {
     public ResponseEntity<UserLoginResponse> login(@Valid @RequestBody UserLoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
+
+    @Operation(summary = "Refresh tokens", description = "Exchanges a valid refresh token for a new access token and refresh token")
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthTokensResponse> refreshToken(@Valid @RequestBody RefreshTokenRequest request) {
+        return ResponseEntity.ok(authService.refreshToken(request));
+    }
+
+    @Operation(summary = "Logout user", description = "Logs out user by revoking refresh token")
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@Valid @RequestBody RefreshTokenRequest request) {
+        authService.logout(request);
+        return ResponseEntity.noContent().build();
+    }
+
 }

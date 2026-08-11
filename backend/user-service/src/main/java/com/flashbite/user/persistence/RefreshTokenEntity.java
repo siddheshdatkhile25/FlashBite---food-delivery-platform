@@ -3,29 +3,28 @@ package com.flashbite.user.persistence;
 import java.time.Instant;
 import java.util.UUID;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.TimeToLive;
+import org.springframework.data.redis.core.index.Indexed;
+
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Table(name = "refresh_tokens")
+@RedisHash("RefreshToken")
 @Getter
 @Setter
-public class RefreshTokenEntity extends AuditableEntity {
+public class RefreshTokenEntity {
 
     @Id
-    private UUID id;
+    private String tokenHash; // Storing the hash of the token as the primary key makes lookups O(1)
 
-    @Column(nullable = false)
+    @Indexed
     private UUID userId;
 
-    @Column(nullable = false, length = 255, unique = true)
-    private String tokenHash;
+    @TimeToLive
+    private Long timeToLiveSeconds;
 
-    @Column(nullable = false)
     private Instant expiresAt;
 
     private Instant revokedAt;
