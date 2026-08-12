@@ -3,7 +3,7 @@ package com.flashbite.user.dto;
 import java.util.UUID;
 
 import com.flashbite.common.domain.UserRole;
-import com.flashbite.user.domain.UserStatus;
+import com.flashbite.common.domain.UserStatus;
 
 public record AuthUserResponse(
         UUID userId,

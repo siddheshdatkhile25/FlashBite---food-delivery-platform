@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.flashbite.common.domain.UserStatus;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -107,7 +109,6 @@ public class AuthServiceImpl implements AuthService {
                         jwtService.refreshTokenExpiresInSeconds()));
     }
 
-    
     @Override
     public AuthTokensResponse refreshToken(RefreshTokenRequest request) {
         String tokenHash = hashToken(request.refreshToken());
@@ -161,9 +162,6 @@ public class AuthServiceImpl implements AuthService {
         refreshTokenEntity.setRevokedAt(Instant.now());
         refreshTokenRepository.save(refreshTokenEntity);
     }
-
-
-
 
     // Helper methods
     private void ensureUserDoesNotExist(String email, String phone) {

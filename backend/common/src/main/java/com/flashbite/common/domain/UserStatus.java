@@ -1,4 +1,4 @@
-package com.flashbite.user.domain;
+package com.flashbite.common.domain;
 
 public enum UserStatus {
 

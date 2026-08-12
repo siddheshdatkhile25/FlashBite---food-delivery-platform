@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.flashbite.common.domain.UserRole;
-import com.flashbite.user.domain.UserStatus;
+import com.flashbite.common.domain.UserStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
