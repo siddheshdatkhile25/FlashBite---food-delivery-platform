@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.flashbite.common.domain.AuthProvider;
 import com.flashbite.common.domain.UserRole;
 import com.flashbite.common.domain.UserStatus;
 
@@ -45,10 +46,10 @@ public class UserEntity extends AuditableEntity {
     @Column(nullable = false, unique = true, length = 255)
     private String email;
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(unique = true, length = 20)
     private String phone;
 
-    @Column(name = "password_hash", nullable = false, length = 255)
+    @Column(name = "password_hash", length = 255)
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
@@ -59,6 +60,23 @@ public class UserEntity extends AuditableEntity {
     @Column(nullable = false, length = 32)
     @Builder.Default
     private UserStatus status = UserStatus.PENDING_VERIFICATION;
+
+    @Column(name = "first_name", length = 120)
+    private String firstName;
+
+    @Column(name = "last_name", length = 120)
+    private String lastName;
+
+    @Column(name = "avatar_url", length = 1024)
+    private String avatarUrl;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "auth_provider", nullable = false, length = 32)
+    @Builder.Default
+    private AuthProvider authProvider = AuthProvider.LOCAL;
+
+    @Column(name = "oauth_provider_id", length = 255)
+    private String oauthProviderId;
 
     @Builder.Default
     @Column(name = "email_verified", nullable = false)

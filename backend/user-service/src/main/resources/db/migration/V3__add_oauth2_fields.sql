@@ -1,0 +1,14 @@
+ALTER TABLE users
+ADD COLUMN first_name VARCHAR(120),
+ADD COLUMN last_name VARCHAR(120),
+ADD COLUMN avatar_url VARCHAR(1024),
+ADD COLUMN auth_provider VARCHAR(32) NOT NULL DEFAULT 'LOCAL',
+ADD COLUMN oauth_provider_id VARCHAR(255);
+
+ALTER TABLE users 
+ALTER COLUMN password_hash DROP NOT NULL,
+ALTER COLUMN phone DROP NOT NULL;
+
+ALTER TABLE users 
+ADD CONSTRAINT chk_user_auth_provider 
+CHECK (auth_provider IN ('LOCAL', 'GOOGLE', 'FACEBOOK'));
