@@ -5,11 +5,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.flashbite.user.security.oauth2.OAuth2SuccessHandler;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,6 +42,7 @@ public class SecurityConfig {
                 .redirectionEndpoint(redirect -> redirect
                     .baseUri("/api/v1/auth/oauth2/callback/*")
                 )
+                .successHandler(oAuth2SuccessHandler)
             )
             
             // Keep it stateless as fits a microservice, though OAuth2 flow briefly uses sessions
