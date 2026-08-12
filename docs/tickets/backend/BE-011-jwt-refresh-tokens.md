@@ -6,7 +6,7 @@
 | **Module** | `user-service` |
 | **Sprint** | 1–2 |
 | **Priority** | P0 |
-| **Status** | Todo |
+| **Status** | Done |
 | **PRD** | UM-05 |
 
 ## Summary
@@ -15,12 +15,12 @@ JWT-based session management: 15-minute access tokens, 7-day refresh tokens with
 
 ## Acceptance Criteria
 
-- [ ] Access token expires in 15 minutes; refresh in 7 days
-- [ ] `POST /api/v1/auth/refresh` issues new token pair and invalidates old refresh token
-- [ ] `POST /api/v1/auth/logout` revokes refresh token
-- [ ] Refresh token reuse detection invalidates token family (security)
-- [ ] JWT claims include `sub`, `role`, `iat`, `exp`
-- [ ] Tokens stored in Redis for revocation lookup
+- [x] Access token expires in 15 minutes; refresh in 7 days
+- [x] `POST /api/v1/auth/refresh` issues new token pair and invalidates old refresh token
+- [x] `POST /api/v1/auth/logout` revokes refresh token
+- [x] Refresh token reuse detection invalidates token family (security)
+- [x] JWT claims include `sub`, `role`, `iat`, `exp`
+- [x] Tokens stored in Redis for revocation lookup
 
 ## API Endpoints
 
@@ -35,5 +35,5 @@ JWT-based session management: 15-minute access tokens, 7-day refresh tokens with
 
 ## Definition of Done
 
-- [ ] Integration test: login → refresh → logout
-- [ ] Expired access token rejected; valid refresh succeeds
+- [x] Integration test: login → refresh → logout
+- [x] Expired access token rejected; valid refresh succeeds
