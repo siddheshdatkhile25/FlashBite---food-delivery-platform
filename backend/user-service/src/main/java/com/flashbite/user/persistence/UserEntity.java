@@ -101,4 +101,8 @@ public class UserEntity extends AuditableEntity {
     public void block() {
         this.status = UserStatus.BLOCKED;
     }
+
+    public void updateAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 }

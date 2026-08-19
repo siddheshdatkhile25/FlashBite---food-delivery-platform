@@ -56,11 +56,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             user = userOptional.get();
 
             //Optionally update their profile if they don't have an avatar yet
-            if(user.getAvatarUrl() == null){
-
+            if(user.getAvatarUrl() == null && userInfo.getImageUrl() != null){
+                user.updateAvatarUrl(userInfo.getImageUrl());
+                userRepository.save(user);
             }
-
-
 
         }else {
             //Auto-Registration case : Brand new user !
