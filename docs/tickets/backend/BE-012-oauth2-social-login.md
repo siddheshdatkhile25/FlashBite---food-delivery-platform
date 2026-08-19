@@ -6,7 +6,7 @@
 | **Module** | `user-service` |
 | **Sprint** | 2 |
 | **Priority** | P0 |
-| **Status** | Todo |
+| **Status** | Done |
 | **PRD** | UM-02 |
 
 ## Summary
