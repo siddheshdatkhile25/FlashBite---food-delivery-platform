@@ -11,8 +11,8 @@ This tracker shows which backend tickets are done and which are still pending ba
 
 | Status | Count |
 |--------|-------|
-| Done | 5 |
-| Pending | 52 |
+| Done | 6 |
+| Pending | 51 |
 
 ## Done
 
@@ -23,12 +23,12 @@ This tracker shows which backend tickets are done and which are still pending ba
 | [BE-003](./BE-003-database-migrations-foundation.md) | Database migrations & multi-service DB setup | Flyway schemas configured per bounded context, `docker-compose` auto-initializes DBs on Postgres mount, integration tests are backed by `Testcontainers`. |
 | [BE-010](./BE-010-user-registration-login.md) | User registration & email/password login | Completed and fully tested. |
 | [BE-011](./BE-011-jwt-refresh-tokens.md) | JWT access & refresh token management | Stored in Redis, refresh token reuse detection and rotation fully implemented. |
+| [BE-012](./BE-012-oauth2-social-login.md) | OAuth2 social login (Google) | Google OAuth2 implemented and tested. Facebook implementation deferred. |
 
 ## Pending
 
 | ID | Title | Notes |
 |----|-------|-------|
-| [BE-012](./BE-012-oauth2-social-login.md) | OAuth2 social login (Google, Facebook) | Pending |
 | [BE-013](./BE-013-rbac.md) | Role-based access control | Pending |
 | [BE-014](./BE-014-profile-management.md) | Profile management | Pending |
 | [BE-015](./BE-015-address-management.md) | Saved delivery addresses | Pending |

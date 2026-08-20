@@ -27,6 +27,23 @@ spring:
     validate-on-migrate: true
     clean-disabled: true
 
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_OAUTH_CLIENT_ID}
+            client-secret: ${GOOGLE_OAUTH_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/api/v1/auth/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+
 server:
   port: 8082
 
@@ -45,9 +62,6 @@ flashbite:
     access-token-ttl-seconds: ${FLASHBITE_ACCESS_TOKEN_TTL_SECONDS:900}
     refresh-token-ttl-seconds: ${FLASHBITE_REFRESH_TOKEN_TTL_SECONDS:604800}
 
-spring:
-  data:
-    redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
-
+app:
+  oauth2:
+    authorized-redirect-uri: ${OAUTH2_AUTHORIZED_REDIRECT_URI:http://localhost:3000/oauth2/redirect}

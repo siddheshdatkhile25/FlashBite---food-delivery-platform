@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flashbite.common.domain.UserRole;
 import com.flashbite.common.exception.GlobalExceptionHandler;
-import com.flashbite.user.domain.UserStatus;
+import com.flashbite.common.domain.UserStatus;
 import com.flashbite.user.dto.AuthTokensResponse;
 import com.flashbite.user.dto.AuthUserResponse;
 import com.flashbite.user.dto.UserLoginRequest;

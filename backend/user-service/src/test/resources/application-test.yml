@@ -13,3 +13,12 @@ spring:
       hibernate:
         jdbc:
           time_zone: UTC
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: dummy-google-client-id
+            client-secret: dummy-google-secret
+          
