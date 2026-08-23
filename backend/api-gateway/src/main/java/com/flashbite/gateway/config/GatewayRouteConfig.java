@@ -57,6 +57,15 @@ public class GatewayRouteConfig {
                 .route("analytics-service", r -> r
                         .path("/api/v1/admin/**")
                         .uri(routes.getAnalyticsServiceUri()))
+                // OpenAPI docs routes
+                .route("user-service-docs", r -> r.path("/v3/api-docs/user-service").filters(f -> f.rewritePath("/v3/api-docs/user-service(/?.*)", "/v3/api-docs$1")).uri(routes.getUserServiceUri()))
+                .route("restaurant-service-docs", r -> r.path("/v3/api-docs/restaurant-service").filters(f -> f.rewritePath("/v3/api-docs/restaurant-service(/?.*)", "/v3/api-docs$1")).uri(routes.getRestaurantServiceUri()))
+                .route("order-service-docs", r -> r.path("/v3/api-docs/order-service").filters(f -> f.rewritePath("/v3/api-docs/order-service(/?.*)", "/v3/api-docs$1")).uri(routes.getOrderServiceUri()))
+                .route("payment-service-docs", r -> r.path("/v3/api-docs/payment-service").filters(f -> f.rewritePath("/v3/api-docs/payment-service(/?.*)", "/v3/api-docs$1")).uri(routes.getPaymentServiceUri()))
+                .route("delivery-service-docs", r -> r.path("/v3/api-docs/delivery-service").filters(f -> f.rewritePath("/v3/api-docs/delivery-service(/?.*)", "/v3/api-docs$1")).uri(routes.getDeliveryServiceUri()))
+                .route("notification-service-docs", r -> r.path("/v3/api-docs/notification-service").filters(f -> f.rewritePath("/v3/api-docs/notification-service(/?.*)", "/v3/api-docs$1")).uri(routes.getNotificationServiceUri()))
+                .route("search-service-docs", r -> r.path("/v3/api-docs/search-service").filters(f -> f.rewritePath("/v3/api-docs/search-service(/?.*)", "/v3/api-docs$1")).uri(routes.getSearchServiceUri()))
+                .route("analytics-service-docs", r -> r.path("/v3/api-docs/analytics-service").filters(f -> f.rewritePath("/v3/api-docs/analytics-service(/?.*)", "/v3/api-docs$1")).uri(routes.getAnalyticsServiceUri()))
                 .build();
     }
 }

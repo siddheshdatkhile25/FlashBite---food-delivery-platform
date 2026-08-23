@@ -79,3 +79,11 @@ flashbite:
       protected-ip-requests-per-window: ${FLASHBITE_GATEWAY_PROTECTED_IP_LIMIT:120}
       protected-user-requests-per-window: ${FLASHBITE_GATEWAY_PROTECTED_USER_LIMIT:60}
       window-seconds: ${FLASHBITE_GATEWAY_RATE_WINDOW_SECONDS:60}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    urls:
+      - name: User Service
+        url: /v3/api-docs/user-service

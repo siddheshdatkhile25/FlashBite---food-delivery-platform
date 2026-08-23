@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import com.flashbite.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import com.flashbite.common.api.ApiResponse;
 import com.flashbite.user.dto.UserProfileReponse;
 
@@ -22,7 +21,7 @@ public class UserController {
     public final UserService userService;
 
     @GetMapping("/profile")
-    public ResponseEntity<ApiResponse<UserProfileReponse>> getUserProfile(@AuthenticationPrincipal Principal principal) {
+    public ResponseEntity<ApiResponse<UserProfileReponse>> getUserProfile(Principal principal) {
         UUID userId = UUID.fromString(principal.getName());
         return userService.getUserProfile(userId)
                 .<ResponseEntity<ApiResponse<UserProfileReponse>>>map(profile -> ResponseEntity.<ApiResponse<UserProfileReponse>>ok(ApiResponse.<UserProfileReponse>success(profile)))
@@ -31,7 +30,7 @@ public class UserController {
 
 
     @PatchMapping("/profile/update")
-    public ResponseEntity<ApiResponse<UserProfileReponse>> updateUserProfile(@Valid @RequestBody UserProfileRequest userProfileRequest , @AuthenticationPrincipal Principal principal) {
+    public ResponseEntity<ApiResponse<UserProfileReponse>> updateUserProfile(@Valid @RequestBody UserProfileRequest userProfileRequest , Principal principal) {
         UUID userId = UUID.fromString(principal.getName());
         return userService.updateUserProfile(userId , userProfileRequest)
                 .<ResponseEntity<ApiResponse<UserProfileReponse>>>map(profile -> ResponseEntity.<ApiResponse<UserProfileReponse>>ok(ApiResponse.<UserProfileReponse>success(profile , "User Updated Successfully")))

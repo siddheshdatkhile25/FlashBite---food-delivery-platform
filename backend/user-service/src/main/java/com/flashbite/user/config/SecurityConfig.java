@@ -62,11 +62,13 @@ public class SecurityConfig {
                 .jwt(jwt -> jwt.jwtAuthenticationConverter(new JwtAuthenticationConverter()))
             )
 
-            //Authorize Http Requests
+            // Authorize Http Requests
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/auth/**").permitAll()
                     .requestMatchers("/").permitAll()
                     .requestMatchers("/api/v1/health").permitAll()
+                    .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                    .requestMatchers("/api/v1/users/**").hasAnyRole("CUSTOMER", "ADMIN", "RESTAURANT", "DRIVER")
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/v1/restaurant/**").hasAnyRole("RESTAURANT", "ADMIN")
                 .requestMatchers("/api/v1/driver/**").hasAnyRole("DRIVER", "ADMIN")
