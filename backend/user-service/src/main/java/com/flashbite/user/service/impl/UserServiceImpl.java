@@ -7,6 +7,7 @@ import com.flashbite.user.dto.UserProfileRequest;
 import com.flashbite.user.persistence.UserEntity;
 import com.flashbite.user.repository.UserRepository;
 import com.flashbite.user.service.UserService;
+import com.flashbite.user.utils.PiiSanitizer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import org.springframework.util.StringUtils;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
     public final UserRepository userRepository;
     @Override
     public Optional<UserProfileReponse> getUserProfile(UUID userId) {
@@ -44,20 +46,25 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new FlashBiteException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND , "User Does Not Exists !"));
 
-        if (StringUtils.hasText(userProfileRequest.firstname())) {
-            user.setFirstName(userProfileRequest.firstname());
+        String firstName = PiiSanitizer.sanitizeName(userProfileRequest.firstname());
+        String lastName = PiiSanitizer.sanitizeName(userProfileRequest.lastname());
+        String email = PiiSanitizer.sanitizeName(userProfileRequest.email());
+        String phone = PiiSanitizer.sanitizePhone(userProfileRequest.phone());
+
+        if (StringUtils.hasText(firstName)){
+            user.setFirstName(firstName);
         }
-        if (StringUtils.hasText(userProfileRequest.lastname())) {
-            user.setLastName(userProfileRequest.lastname());
+        if (StringUtils.hasText(lastName)){
+            user.setLastName(lastName);
         }
         if (StringUtils.hasText(userProfileRequest.avatarUrl())) {
             user.setAvatarUrl(userProfileRequest.avatarUrl());
         }
-        if (StringUtils.hasText(userProfileRequest.email())) {
-            user.setEmail(userProfileRequest.email());
+        if (StringUtils.hasText(email)){
+            user.setEmail(email);
         }
-        if (StringUtils.hasText(userProfileRequest.phone())) {
-            user.setPhone(userProfileRequest.phone());
+        if (StringUtils.hasText(phone)){
+            user.setPhone(phone);
         }
 
         UserEntity updatedUser = userRepository.save(user);

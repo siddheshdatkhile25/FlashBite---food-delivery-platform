@@ -6,7 +6,7 @@
 | **Module** | `user-service` |
 | **Sprint** | 2 |
 | **Priority** | P0 |
-| **Status** | Todo |
+| **Status** | Done |
 | **PRD** | UM-04 |
 
 ## Summary
@@ -15,9 +15,9 @@ Users update name and photo; changes reflected immediately.
 
 ## Acceptance Criteria
 
-- [ ] `GET /api/v1/users/me` returns current user profile
-- [ ] `PATCH /api/v1/users/me` updates name, photo URL
-- [ ] Updates validated server-side; PII fields sanitized
+- [x] `GET /api/v1/users/me` returns current user profile
+- [x] `PATCH /api/v1/users/me` updates name, photo URL
+- [x] Updates validated server-side; PII fields sanitized
 
 ## API Endpoints
 
@@ -32,4 +32,4 @@ Users update name and photo; changes reflected immediately.
 
 ## Definition of Done
 
-- [ ] Integration test: update profile → GET reflects changes
+- [x] Integration test: update profile → GET reflects changes
