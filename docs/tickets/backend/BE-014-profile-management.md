@@ -11,14 +11,12 @@
 
 ## Summary
 
-Users update name, photo, and preferences; changes reflected immediately.
+Users update name and photo; changes reflected immediately.
 
 ## Acceptance Criteria
 
 - [ ] `GET /api/v1/users/me` returns current user profile
-- [ ] `PATCH /api/v1/users/me` updates name, photo URL, preferences JSON
-- [ ] Photo upload via pre-signed URL or multipart (document chosen approach)
-- [ ] Preferences include notification defaults (see BE-065)
+- [ ] `PATCH /api/v1/users/me` updates name, photo URL
 - [ ] Updates validated server-side; PII fields sanitized
 
 ## API Endpoints

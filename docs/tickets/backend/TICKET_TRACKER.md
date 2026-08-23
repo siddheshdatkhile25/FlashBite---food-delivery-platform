@@ -12,7 +12,7 @@ This tracker shows which backend tickets are done and which are still pending ba
 | Status | Count |
 |--------|-------|
 | Done | 6 |
-| Pending | 51 |
+| Pending | 52 |
 
 ## Done
 
@@ -33,6 +33,7 @@ This tracker shows which backend tickets are done and which are still pending ba
 | [BE-014](./BE-014-profile-management.md) | Profile management | Pending |
 | [BE-015](./BE-015-address-management.md) | Saved delivery addresses | Pending |
 | [BE-016](./BE-016-password-reset-otp.md) | Password reset via email OTP | Pending |
+| [BE-017](./BE-017-photo-upload.md) | Photo upload mechanism | Pending |
 | [BE-020](./BE-020-restaurant-registration-profile.md) | Restaurant registration & profile | Pending |
 | [BE-021](./BE-021-menu-crud.md) | Menu CRUD (categories, items, prices) | Pending |
 | [BE-022](./BE-022-operating-hours.md) | Operating hours & holiday schedule | Pending |

@@ -17,6 +17,7 @@ Per-user opt-in/opt-out per channel (push, SMS, email) and event category.
 
 - [ ] `GET /api/v1/users/me/notification-preferences`
 - [ ] `PUT /api/v1/users/me/notification-preferences` with channel toggles
+- [ ] Add a JSONB (or string-mapped) `preferences` field to the `UserEntity`, update DTOs, and wire it up to support these endpoints.
 - [ ] All notification senders check preferences before dispatch
 - [ ] Critical SMS (delivered) cannot be fully disabled (configurable minimum)
 

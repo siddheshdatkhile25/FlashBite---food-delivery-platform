@@ -20,7 +20,7 @@ import static com.flashbite.common.api.ApiConstants.API_PREFIX;
 public class UserController {
     public final UserService userService;
 
-    @GetMapping("/profile")
+    @GetMapping("/me")
     public ResponseEntity<ApiResponse<UserProfileReponse>> getUserProfile(Principal principal) {
         UUID userId = UUID.fromString(principal.getName());
         return userService.getUserProfile(userId)
@@ -29,7 +29,7 @@ public class UserController {
     }
 
 
-    @PatchMapping("/profile/update")
+    @PatchMapping("/me")
     public ResponseEntity<ApiResponse<UserProfileReponse>> updateUserProfile(@Valid @RequestBody UserProfileRequest userProfileRequest , Principal principal) {
         UUID userId = UUID.fromString(principal.getName());
         return userService.updateUserProfile(userId , userProfileRequest)
