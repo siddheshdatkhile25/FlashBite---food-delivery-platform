@@ -2,6 +2,7 @@ package com.flashbite.user.persistence;
 
 import java.util.UUID;
 
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.flashbite.common.domain.AuthProvider;
@@ -17,11 +18,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(
@@ -32,11 +28,11 @@ import lombok.NoArgsConstructor;
     }
 )
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @DynamicUpdate
-
 public class UserEntity extends AuditableEntity {
 
     @Id

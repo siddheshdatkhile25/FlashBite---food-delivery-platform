@@ -65,10 +65,15 @@ flashbite:
     security:
       jwt-secret: ${FLASHBITE_JWT_SECRET:flashbite-dev-jwt-secret-change-me-1234567890abcdef}
       public-paths:
+        - /
         - /api/v1/auth/**
         - /api/v1/health
         - /api/v1/payments/webhook
         - /actuator/**
+        - /v3/api-docs/**
+        - /swagger-ui/**
+        - /swagger-ui.html
+        - /webjars/**
     rate-limit:
       public-ip-requests-per-window: ${FLASHBITE_GATEWAY_PUBLIC_IP_LIMIT:60}
       protected-ip-requests-per-window: ${FLASHBITE_GATEWAY_PROTECTED_IP_LIMIT:120}

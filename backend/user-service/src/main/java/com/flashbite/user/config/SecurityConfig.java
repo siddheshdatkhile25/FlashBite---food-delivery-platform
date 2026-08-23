@@ -46,10 +46,6 @@ public class SecurityConfig {
             // Allow all requests to pass through initially. 
             // The API Gateway handles general JWT auth blocking, but we must let the oauth2 routes 
             // trigger the Spring Security OAuth2 filters in this local container.
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/auth/**").permitAll()
-                .anyRequest().permitAll() 
-            )
             
             // Step 3 Configuration: Override default OAuth2 login paths
             .oauth2Login(oauth2 -> oauth2
@@ -69,6 +65,8 @@ public class SecurityConfig {
             //Authorize Http Requests
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/auth/**").permitAll()
+                    .requestMatchers("/").permitAll()
+                    .requestMatchers("/api/v1/health").permitAll()
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/v1/restaurant/**").hasAnyRole("RESTAURANT", "ADMIN")
                 .requestMatchers("/api/v1/driver/**").hasAnyRole("DRIVER", "ADMIN")

@@ -17,8 +17,9 @@ public class GatewayRouteConfig {
     @Bean
     RouteLocator gatewayRoutes(RouteLocatorBuilder builder, GatewayRouteProperties routes) {
         return builder.routes()
+
                 .route("user-service-auth", r -> r
-                        .path("/api/v1/auth/**", "/api/v1/users/**", "/api/v1/health")
+                        .path("/api/v1/auth/**", "/api/v1/users/**", "/api/v1/health" , "/")
                         .uri(routes.getUserServiceUri()))
                 .route("restaurant-service-public-details", r -> r
                         .path("/api/v1/restaurants/*/menu", "/api/v1/restaurants/*/reviews/**")
