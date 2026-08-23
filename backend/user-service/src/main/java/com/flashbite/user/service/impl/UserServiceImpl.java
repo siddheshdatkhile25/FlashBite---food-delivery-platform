@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.util.StringUtils;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -42,11 +44,21 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new FlashBiteException(ErrorCode.NOT_FOUND, HttpStatus.NOT_FOUND , "User Does Not Exists !"));
 
-        user.setFirstName(userProfileRequest.firstname());
-        user.setLastName(userProfileRequest.lastname());
-        user.setAvatarUrl(userProfileRequest.avatarUrl());
-        user.setEmail(userProfileRequest.email());
-        user.setPhone(userProfileRequest.phone());
+        if (StringUtils.hasText(userProfileRequest.firstname())) {
+            user.setFirstName(userProfileRequest.firstname());
+        }
+        if (StringUtils.hasText(userProfileRequest.lastname())) {
+            user.setLastName(userProfileRequest.lastname());
+        }
+        if (StringUtils.hasText(userProfileRequest.avatarUrl())) {
+            user.setAvatarUrl(userProfileRequest.avatarUrl());
+        }
+        if (StringUtils.hasText(userProfileRequest.email())) {
+            user.setEmail(userProfileRequest.email());
+        }
+        if (StringUtils.hasText(userProfileRequest.phone())) {
+            user.setPhone(userProfileRequest.phone());
+        }
 
         UserEntity updatedUser = userRepository.save(user);
 
